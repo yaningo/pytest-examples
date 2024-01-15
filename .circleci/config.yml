@@ -21,7 +21,7 @@ jobs:
     # A list of available CircleCI Docker convenience images are available here: https://circleci.com/developer/images/image/cimg/python
     # The executor is the environment in which the steps below will be executed - below will use a python 3.10.2 container
     # Change the version below to your required version of python
-    parallelism: 3
+    # parallelism: 3
     docker:
       - image: cimg/python:3.10.2
     # Checkout the code as the first step. This is a dedicated CircleCI step.
@@ -32,6 +32,7 @@ jobs:
     steps:
       - checkout
       - python/install-packages:
+          args: pytest
           pkg-manager: pip
           # app-dir: ~/project/package-directory/  # If your requirements.txt isn't in the root directory.
           # pip-dependency-file: test-requirements.txt  # if you have a different name for your requirements file, maybe one that combines your runtime and test requirements.
@@ -39,9 +40,10 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: |
-            TEST_FILES=$(circleci tests glob "tests/**/*.py" | circleci tests split)
-            mkdir -p test-results
-            pytest --verbose --junitxml=test-results/junit.xml $TEST_FILES
+            # TEST_FILES=$(circleci tests glob "tests/**/*.py" | circleci tests split)
+            # mkdir -p test-results
+            # pytest --verbose --junitxml=test-results/junit.xml $TEST_FILES
+            pytest .
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
