@@ -42,9 +42,8 @@ jobs:
           # This assumes pytest is installed via the install-package step above
           command: |
             # TEST_FILES=$(circleci tests glob "tests/**/*.py" | circleci tests split)
-            # mkdir -p test-results
-            # pytest --verbose --junitxml=test-results/junit.xml $TEST_FILES
-            pytest .
+            mkdir -p test-results
+            pytest --verbose --junitxml=test-results/junit.xml
 
       - run:
           name: Upload results to Buildkite Test Analytic
